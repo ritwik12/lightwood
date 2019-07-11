@@ -1,6 +1,8 @@
 
 ![Lightwood](https://mindsdb.github.io/lightwood/assets/logo.png) 
-
+#
+[![Build Status](https://travis-ci.org/mindsdb/lightwood.svg?branch=master)](https://travis-ci.org/mindsdb/lightwood)
+[![PyPI version](https://badge.fury.io/py/lightwood.svg)](https://badge.fury.io/py/lightwood)
 
 Lightwood has two objectives:
 
