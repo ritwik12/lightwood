@@ -8,5 +8,6 @@ cache: pip
 install:
   - travis_wait pip install -e .
 # run tests
+before_script: cd integration_tests
 script:
-  - pytest
+  - python3 train_and_learn.py
