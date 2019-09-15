@@ -4,8 +4,8 @@ from pytorch_transformers import DistilBertModel, DistilBertTokenizer
 
 class BertEncoder:
     def __init__(self):
-        self._tokenizer = DistilBertModel.from_pretrained('distilbert-base-uncased')
-        self._model = DistilBertTokenizer.from_pretrained('distilbert-base-uncased')
+        self._tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased')
+        self._model = DistilBertModel.from_pretrained('distilbert-base-uncased')
         self._pytorch_wrapper = torch.FloatTensor
 
     def encode(self, column_data):
