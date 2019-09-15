@@ -1,4 +1,4 @@
-from pytorch_transformers import RobertaModel, RobertaTokenizer
+from pytorch_transformers import DistilBertModel, DistilBertTokenizer
 
 
 class BertEncoder:
