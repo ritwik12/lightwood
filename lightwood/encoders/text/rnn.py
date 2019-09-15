@@ -1,6 +1,8 @@
 from lightwood.encoders.text.helpers.rnn_helpers import *
 import logging
 import math
+
+
 class RnnEncoder:
 
     def __init__(self, encoded_vector_size = 256, train_iters=75000, stop_on_error = 0.0001, learning_rate=0.01, is_target = False):
