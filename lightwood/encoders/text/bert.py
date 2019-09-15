@@ -3,42 +3,28 @@ from pytorch_transformers import RobertaModel, RobertaTokenizer
 
 class BertEncoder:
     def __init__(self):
-        self.tokenizer = RobertaTokenizer.from_pretrained('roberta-base')
-        self.model = RobertaModel.from_pretrained('roberta-base')
+        self.tokenizer = DistilBertModel.from_pretrained('distilbert-base-uncased')
+        self.model = DistilBertTokenizer.from_pretrained('distilbert-base-uncased')
+        print(self.model)
+        exit()
 
     def encode(self, column_data):
 
-        print(column_data)
-        exit()
+        tokenized_inputs = []
+        for text in column_data:
+            tokenized_input = torch.tensor([tokenizer.encode(text, add_special_tokens=True)])
+            tokenized_inputs.append(tokenized_input)
 
-        return self._pytorch_wrapper(ret)
+        encoded_representation = []
+        with torch.no_grad():
+            for tokenized_input in tokenized_inputs:
+                last_hidden_states = model(tokenized_input)[0]
+                print(last_hidden_states)
+                encoded_representation.append(last_hidden_states)
+
+        return self._pytorch_wrapper(encoded_representation)
 
 
     def decode(self, encoded_values_tensor, max_length = 100):
-
-        ret = []
-        with torch.no_grad():
-            for decoder_hiddens in encoded_values_tensor:
-                decoder_hidden = torch.FloatTensor([[decoder_hiddens.tolist()]])
-
-
-                decoder_input = torch.tensor([[SOS_token]], device=device)  # SOS
-
-                decoded_words = []
-
-                for di in range(max_length):
-                    decoder_output, decoder_hidden = self._decoder(
-                        decoder_input, decoder_hidden)
-
-                    topv, topi = decoder_output.data.topk(1)
-                    if topi.item() == EOS_token:
-                        decoded_words.append('<EOS>')
-                        break
-                    else:
-                        decoded_words.append(self._output_lang.index2word[topi.item()])
-
-                    decoder_input = topi.squeeze().detach()
-
-                ret += [' '.join(decoded_words)]
-
-        return ret
+        # When test is an output... a bit trickier to handle this case, thinking on it
+        pass
