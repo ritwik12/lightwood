@@ -36,8 +36,8 @@ class BertEncoder:
             while len(arr) < self._max_len:
                 arr.append(0)
             while len(arr) > self._max_len:
-                arr.pop(self._max_len())
-                
+                arr.pop(self._max_len)
+
             for i in range(len(arr)):
                 arr[i] = arr[i]/self._max_ele
 
