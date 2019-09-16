@@ -15,7 +15,7 @@ class BertEncoder:
         for text in column_data:
             tokenized_input = torch.tensor([self._tokenizer.encode(text, add_special_tokens=True)])
 
-            encoded_representation.append(list(tokenized_input))
+            encoded_representation.append(list(tokenized_input[0]))
 
             tokenized_input = torch.tensor(list(tokenized_input[0][0:512]))
             tokenized_inputs.append(tokenized_input)
@@ -28,7 +28,7 @@ class BertEncoder:
                     max_element = ele
 
         for arr in encoded_representation:
-            if len(arr) < max_len:
+            while len(arr) < max_len:
                 arr.append(0)
             for i in range(len(arr)):
                 arr[i] = arr[i]/max_element
