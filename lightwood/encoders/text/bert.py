@@ -8,6 +8,9 @@ class BertEncoder:
         self._model = DistilBertModel.from_pretrained('distilbert-base-uncased')
         self._pytorch_wrapper = torch.FloatTensor
 
+        self._max_len = None
+        self._max_ele = None
+
     def encode(self, column_data):
         encoded_representation = []
 
@@ -20,18 +23,21 @@ class BertEncoder:
             tokenized_input = torch.tensor(list(tokenized_input[0][0:512]))
             tokenized_inputs.append(tokenized_input)
 
-        max_len = max([len(x) for x in encoded_representation])
-        max_element = 0
-        for arr in encoded_representation:
-            for ele in arr:
-                if ele > max_element:
-                    max_element = ele
+        if self._max_len is None:
+            self._max_len = max([len(x) for x in encoded_representation])
+
+        if self._max_ele is None:
+            self._max_ele = 0
+            for arr in encoded_representation:
+                for ele in arr:
+                    if ele > self._max_ele:
+                        self._max_ele = ele
 
         for arr in encoded_representation:
-            while len(arr) < max_len:
+            while len(arr) < self._max_len:
                 arr.append(0)
             for i in range(len(arr)):
-                arr[i] = arr[i]/max_element
+                arr[i] = arr[i]/self._max_ele
 
         return self._pytorch_wrapper(encoded_representation)
 
