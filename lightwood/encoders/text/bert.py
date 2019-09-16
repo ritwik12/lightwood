@@ -36,6 +36,7 @@ class BertEncoder:
         for arr in encoded_representation:
             while len(arr) < self._max_len:
                 arr.append(0)
+            arr = arr[0:self._max_len]
             for i in range(len(arr)):
                 arr[i] = arr[i]/self._max_ele
 
