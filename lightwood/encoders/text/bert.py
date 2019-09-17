@@ -1,11 +1,11 @@
 import torch
-from pytorch_transformers import DistilBertModel, DistilBertTokenizer
+from pytorch_transformers import DistilBertModel, DistilBertForSequenceClassification, DistilBertTokenizer
 
 
 class BertEncoder:
     def __init__(self):
         self._tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased')
-        self._model = DistilBertModel.from_pretrained('distilbert-base-uncased')
+        self._model = DistilBertForSequenceClassification.from_pretrained('distilbert-base-uncased')
         self._pytorch_wrapper = torch.FloatTensor
         self._max_len = None
         self._max_ele = None
@@ -48,10 +48,9 @@ class BertEncoder:
         with torch.no_grad():
             for tokenized_input in tokenized_inputs:
                 hidden_states = self._model(tokenized_input)
-                print(hidden_states.size())
-                print(hidden_states[0].size())
-                print(hidden_states[0][0].size())
-                encoded_representation.append(last_hidden_states)
+                vec = hidden_states[0][0].tolist()
+                print(vec)
+                encoded_representation.append(vec)
 
         return self._pytorch_wrapper(encoded_representation)
 
